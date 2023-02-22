@@ -1,0 +1,42 @@
+<?php
+// get custom data
+$custom_data = $block->getCustomData();
+?>
+<fieldset class="fieldset">
+    <?php
+    if (count($custom_data)) {
+        ?>
+        <div class="table-wrapper custom-data ">
+            <table class="data table table-data-items ">
+                <caption class="table-caption"><?= $block->escapeHtml('Custom Pagination') ?></caption>
+                <thead>
+                    <tr>
+                         <th>FAQ Id</th>
+                         <th>FAQ</th>
+                         <th>Created At</th>
+                         <th>Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($custom_data as $item): ?>
+                    <tr>
+                         <td><?php echo $item->getData('faq_id'); ?></td>
+                         <td><?php echo $item->getData('faq'); ?></td>
+                         <td> <?php echo $item-> getData('created_at'); ?> </td>
+                         <td><?php echo $item->getData('updated_at'); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php if ($block->getPagerHtml()): ?>
+                <div class="order-products-toolbar toolbar bottom">
+                    <?= $block->getPagerHtml() ?>
+                </div>
+        <?php endif ?>
+    <?php } else { ?>
+                <div class="message info empty">
+                    <span><?= $block->escapeHtml('You have no data in table.') ?></span>
+                </div>
+    <?php  } ?>
+</fieldset>

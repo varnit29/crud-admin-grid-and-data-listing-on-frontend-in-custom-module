@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ksolves
+ *
+ * @category  Ksolves
+ * @package   Ksolves_FAQ
+ * @author    Ksolves Team
+ * @copyright Copyright (c) Ksolves India Limited (https://www.ksolves.com/)
+ * @license   https://store.ksolves.com/magento-license
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <!-- create ksolves_faq table -->
+    <table name="ksolves_faq" resource="default" comment="Ksolves Faq">
+        <column xsi:type="int" name="faq_id" padding="10" identity="true" unsigned="true" nullable="false" comment="Faq Id"/>
+        <column xsi:type="varchar" name="faq" nullable="true" length="255" comment="Faq"/>
+        <column xsi:type="text" name="content" nullable="true" comment="Content"/>
+        <column xsi:type="varchar" name="faqgroup_id" nullable="false" length="255" comment="Faqgroup Id"/>
+        <column xsi:type="varchar" name="meta_title" length="255" nullable="false" comment="Meta Title"/>
+        <column xsi:type="varchar" name="meta_description" length="255" nullable="false" comment="Meta Description"/>
+        <column xsi:type="varchar" name="url_key" length="255" nullable="false" comment="Meta Description"/> 
+        <column xsi:type="varchar" name="url" length="255" nullable="false" comment="URL Key"/>
+        <column xsi:type="varchar" name="image" length="255" nullable="false" comment="Image"/>
+        <column xsi:type="varchar" name="sort_order" length="255" nullable="false" comment="Sort Order"/>
+        <column xsi:type="boolean" name="status" default="true" comment="Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false"
+            default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false"
+            default="CURRENT_TIMESTAMP" comment="Updated At"/> 
+        <column xsi:type="decimal" name="helpful_votes" precision="10" scale="2" unsigned="true" nullable="true" comment="Helpful Votes" default="0"/>    
+        <column xsi:type="decimal" name="total_votes" precision="10" scale="2" unsigned="true" nullable="true" comment="Total Votes" default="0" />  
+        <column xsi:type="decimal" name="helpfulness_rate" precision="10" scale="2" unsigned="true" nullable="true" comment="Helpfulness rate" default="0"/> 
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="faq_id"/>
+        </constraint>
+        <!-- <constraint xsi:type="unique" referenceId="KSOLVES_FAQ_URL_KEY">
+            <column name="url_key"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="KSOLVES_FAQ_FAQ">
+            <column name="faq"/>
+        </constraint> -->
+        <index referenceId="kSOLVES_FAQ" indexType="fulltext">
+            <column name="url_key"/>
+            <column name="faq"/>
+        </index>
+    </table>
+
+    <!-- create ksolves_faq table -->
+    <table name="ksolves_faqgroup" resource="default" comment="Ksolves FaqGroup">
+        <column xsi:type="int" name="faqgroup_id" padding="10" identity="true" unsigned="true" nullable="false" comment="Faqgroup Id"/>
+        <column xsi:type="varchar" name="group_name" nullable="true" length="255" comment="Group Name"/>
+        <column xsi:type="varchar" name="group_code" nullable="true" length="255" comment="Group Code"/>
+        <column xsi:type="varchar" name="width" nullable="true" length="255" comment="width"/>
+        <column xsi:type="boolean" name="status" default="true" comment="Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false"
+            default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false"
+            default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="faqgroup_id"/>
+        </constraint>  
+        <constraint xsi:type="unique" referenceId="KSOLVES_FAQGROUP_GROUP_NAME">
+            <column name="group_name"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="KSOLVES_FAQGROUP_GROUP_CODE">
+            <column name="group_code"/>
+        </constraint>
+        <index referenceId="KSOLVES_FAQGROUP" indexType="fulltext">
+            <column name="group_name"/>
+            <column name="group_code"/>
+        </index>
+    </table>
+
+    <!-- create ksolvesfaq_helpfulness_voting table -->
+    <table name="ksolvesfaq_helpfulness_voting" resource="default" comment="Ksolves Helpfulness voting">
+        <column xsi:type="int" name="voting_id" padding="10" identity="true" unsigned="true" nullable="false" comment="voting Id"/>
+        <column xsi:type="int" name="faq_id" nullable="true" unsigned="true" padding="10"/>
+        <column xsi:type="varchar" name="user_email" nullable="false" default='' length="255" comment="Group Code"/>
+        <column xsi:type="varchar" name="user_ip" nullable="false" default='' length="255" comment="User Ip"/>
+        <column xsi:type="boolean" name="helpfulness" default="true" comment="Helpfulness"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false"
+            default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false"
+            default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="voting_id"/>
+        </constraint>
+        <index referenceId="INDEX_REFERENCE" indexType="btree">
+            <column name="voting_id"/>
+        </index>
+        <constraint xsi:type="foreign" referenceId="KSOLVESFAQ_HELPFULNESS_VOTING_FAQ_ID_KSOLVES_FAQ_FAQ_ID" table="ksolvesfaq_helpfulness_voting" column="faq_id" referenceTable="ksolves_faq" referenceColumn="faq_id" onDelete="CASCADE"/>
+    </table>
+</schema>

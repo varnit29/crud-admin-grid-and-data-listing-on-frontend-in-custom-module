@@ -1,0 +1,65 @@
+{
+    "ksolves_faq": {
+        "column": {
+            "faq_id": true,
+            "faq": true,
+            "content": true,
+            "faqgroup_id": true,
+            "meta_title": true,
+            "meta_description": true,
+            "url_key": true,
+            "url": true,
+            "image": true,
+            "sort_order": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true,
+            "helpful_votes": true,
+            "total_votes": true,
+            "helpfulness_rate": true
+        },
+        "index": {
+            "KSOLVES_FAQ_URL_KEY_FAQ": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "ksolves_faqgroup": {
+        "column": {
+            "faqgroup_id": true,
+            "group_name": true,
+            "group_code": true,
+            "width": true,
+            "status": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "KSOLVES_FAQGROUP_GROUP_NAME_GROUP_CODE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "KSOLVES_FAQGROUP_GROUP_NAME": true,
+            "KSOLVES_FAQGROUP_GROUP_CODE": true
+        }
+    },
+    "ksolvesfaq_helpfulness_voting": {
+        "column": {
+            "voting_id": true,
+            "faq_id": true,
+            "user_email": true,
+            "user_ip": true,
+            "helpfulness": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "KSOLVESFAQ_HELPFULNESS_VOTING_VOTING_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "KSOLVESFAQ_HELPFULNESS_VOTING_FAQ_ID_KSOLVES_FAQ_FAQ_ID": true
+        }
+    }
+}
